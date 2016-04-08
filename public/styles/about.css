@@ -1,0 +1,29 @@
+
+
+.titulos{
+    height: 80px;
+}
+
+#lista{
+    list-style: none;
+    font-size: 1.5em;
+
+}
+#lista li{
+    padding-top: 10px;
+}
+
+#lista li a:hover{
+    color: darkgray;
+    cursor: pointer;
+}
+#lista li a{
+    text-decoration: none;
+    color: black;
+}
+
+
+#map{
+    width: 100%;
+    height: 400px;
+}

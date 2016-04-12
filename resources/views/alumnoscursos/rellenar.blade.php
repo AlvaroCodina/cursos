@@ -17,7 +17,8 @@
         </div>
 
         <!-- FORM STARTS HERE -->
-        {{ Form::model($alumno, array('route' => array('alumnoscursos.putCheckDatos', $id), 'method' => 'PUT')) }}
+
+        {{ Form::model($alumno, array('action' => array('AlumnosCursosController@putCheckDatos', $id), 'method' => 'PUT')) }}
 
         <div class="form-group">
             {{ Form::label('camara', 'Camara') }}

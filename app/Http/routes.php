@@ -61,7 +61,7 @@ Route::group(['middleware' => 'web'], function() {
         });
 
         Route::get('alumnoscursos/{id}/checkDatos', 'AlumnosCursosController@checkDatos');
-        Route::any('alumnoscursos/{id}/putcheckDatos', 'AlumnosCursosController@putCheckDatos');
+        Route::any('alumnoscursos/{id}/putCheckDatos', 'AlumnosCursosController@putCheckDatos');    //No se usa
         /*Route::get('alumnoscursos/{id}/checkDatos', function ($id) {
             return view('alumnoscursos.rellenar')->with('id', $id);
         });*/

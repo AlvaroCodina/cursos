@@ -18,7 +18,7 @@
 
         <div class="form-group">
             {{ Form::label('categoria', 'Categoria') }}
-            {{ Form::text('categoria', null, array('class' => 'form-control')) }}
+            {{ Form::select('categoria', array('Fotografía' => 'Fotografía', 'Photoshop' => 'Photoshop', 'Niños' => 'Niños'), null, array('class' => 'form-control')) }}
             @if ($errors->has('categoria')) <p class="help-block">{{ $errors->first('categoria') }}</p> @endif
         </div>
 

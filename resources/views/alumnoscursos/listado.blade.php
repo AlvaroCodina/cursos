@@ -16,7 +16,8 @@
     <div class="col-sm-8 col-sm-offset-2">
 
         <div class="page-header">
-            <h1><span class="glyphicon glyphicon-th-list"></span> Listado de los Alumnos del Curso: {{ $curso->categoria }}</h1>
+            <h1><span class="glyphicon glyphicon-th-list"></span> Listado de los Alumnos del Curso: {{ $curso->categoria }}<small> {{ $curso->fechaInicio }}</small></h1>
+            <h3>Alumnos inscritos: {{ $numAlumnos }}, Número mínimo: {{ $curso->numMin }}, Número máximo: {{ $curso->numMax }}</h3>
         </div>
 
         <div>
@@ -39,7 +40,7 @@
                         <td>{{ $alumno->email }}</td>
                         <td>{{ $alumno->telefono }}</td>
                         <td>
-                            {{ Form::open(array('route' => array('alumnoscursos.destroy', $curso->id), 'method' => 'delete')) }}
+                            {{ Form::open(array('route' => array('alumnoscursos.destroy', $curso->id."|".$alumno->id), 'method' => 'delete')) }}
                             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Quitar</button>
                             {{ Form::close() }}
                         </td>

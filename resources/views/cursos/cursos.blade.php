@@ -21,7 +21,11 @@
 
             <div class="form-group">
                 <label for="categoria">Categoria<small> (Texto)</small></label>
-                <input type="text" id="categoria" class="form-control" name="categoria" placeholder="categoria" value="{{ \Illuminate\Support\Facades\Input::old('categoria') }}">
+                <select name="categoria" id="categoria" class="form-control" value="{{ \Illuminate\Support\Facades\Input::old('categoria') }}">
+                    <option value="Fotografía">Fotografía</option>
+                    <option value="Photoshop">Photoshop</option>
+                    <option value="Niños">Niños</option>
+                </select>
                 @if ($errors->has('categoria')) <p class="help-block">{{ $errors->first('categoria') }}</p> @endif
             </div>
 

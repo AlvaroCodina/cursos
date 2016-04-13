@@ -158,6 +158,7 @@ return [
 
 
         Collective\Html\HtmlServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
     ],
 
@@ -206,6 +207,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Html' => 'Collective\Html\HtmlFacade',
         'Form' => 'Collective\Html\FormFacade',
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
 
     ],
 

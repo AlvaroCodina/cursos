@@ -19,9 +19,9 @@
         <div>
 
             @foreach ($cursos as $dts)
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-info"><b>{{ $dts->categoria }}</b> {{ $dts->fechaInicio }}</li>
-                    <ul class="list-group">
+                <ul class="list-group dropdown">
+                    <li class="list-group-item list-group-item-info dropdown-toggle" type="button" data-toggle="dropdown"><b>{{ $dts->categoria }}</b> {{ $dts->fechaInicio }}</li>
+                    <ul class="list-group dropdown-menu droplist">
                         @foreach ($alumnos as $alumno)
                             @if($dts->cursos_id == $alumno->cursos_id)
                                 <li class="list-group-item">{{ $alumno->nombre }} {{ $alumno->apellidos }}</li>
@@ -30,6 +30,20 @@
                     </ul>
                 </ul>
             @endforeach
+
+            <!-- Faltan las arrobas y quitar la separación entre { { -->
+            <!--foreach ($cursos as $dts)
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-info"><b>{ { $dts->categoria }}</b> { { $dts->fechaInicio }}</li>
+                        <ul class="list-group">
+                            foreach ($alumnos as $alumno)
+                                if($dts->cursos_id == $alumno->cursos_id)
+                                    <li class="list-group-item">{ { $alumno->nombre }} { { $alumno->apellidos }}</li>
+                                endif
+                            endforeach
+                        </ul>
+                    </ul>
+                endforeach-->
 
         </div>
 

@@ -29,8 +29,7 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/">Home</a></li>
-                    <li><a href="/cursos/create">Cursos</a></li>
-                    <li><a href="/cursos">Listado</a></li>
+                    <li><a href="/cursos">Cursos</a></li>
                     <li><a href="/alumnos/create">Alumnos</a></li>
                     <li><a href="/alumnos">Listado</a></li>
                     <li><a href="/alumnoscursos">Listado AC</a></li>

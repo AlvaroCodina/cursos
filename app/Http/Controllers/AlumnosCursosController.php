@@ -25,6 +25,10 @@ class AlumnosCursosController extends Controller
         $alumnos = DB::select('select alumnos.nombre, alumnos.apellidos, alumnos_cursos.cursos_id from cursos, alumnos, alumnos_cursos where cursos.id=alumnos_cursos.cursos_id and alumnos.id=alumnos_cursos.alumnos_id');
         $cursos = DB::select('select cursos.categoria, cursos.fechaInicio, alumnos_cursos.cursos_id from cursos, alumnos, alumnos_cursos where cursos.id=alumnos_cursos.cursos_id and alumnos.id=alumnos_cursos.alumnos_id GROUP BY alumnos_cursos.cursos_id');
 
+        /*$cur = Cursos::find(1);
+        $cur->alumnoscursos();
+        dd($cur);*/
+
         return view('alumnoscursos.index')->with('alumnos', $alumnos)->with('cursos', $cursos);
     }
 
@@ -105,10 +109,17 @@ class AlumnosCursosController extends Controller
         $cursosLlenos = array();
         $fechaLlena=Carbon::now();
         $salir=false;
+        $algo=false;
 
         do {
 
+            $salir=true;
             $fechas = DB::select("select * from cursos where categoria='$categoria'");
+
+            if(count($fechas)==0){
+                $msg = "No hay cursos.";
+                goto end;
+            }
 
             for($i = 0; $i < count($fechas); $i++){
                 $cDate = Carbon::parse($fechas[$i]->fechaInicio);
@@ -147,14 +158,18 @@ class AlumnosCursosController extends Controller
             }
 
             if($numeroAlumnos==$num_max){
-                $msg="Ya no hay más plazas!! y no hay más cursos programados aún";
-                goto end;
+                $salir=false;
+                //goto end;
             }
 
 
-        } while ($salir==true);
+        } while ($algo==true);
 
         end:
+
+        if($salir==false){
+            $msg="Ya no hay más plazas!! y no hay más cursos programados aún";
+        }
 
         //devolver el mensaje
         return view('alumnoscursos.pagar')->with('id', $id)->with('mensaje', $msg);
@@ -200,16 +215,21 @@ class AlumnosCursosController extends Controller
     public function show($id)
     {
 
-        //$lista = DB::table('alumnos_cursos')->where('cursos_id', $id)->get();
-        $lista = DB::select('select alumnos.* from alumnos, alumnos_cursos where alumnos.id=alumnos_cursos.alumnos_id and alumnos_cursos.cursos_id='.$id);
+        /** Tal como lo tengo seria:
+        * $cursos = Alumnos::find($idAlumno)->cursos()->get();
+        * Esto me devolvería un array que recorrería con un foreach con todos los cursos del alumno.
+        */
 
+
+        //$lista = DB::select('select alumnos.* from alumnos, alumnos_cursos where alumnos.id=alumnos_cursos.alumnos_id and alumnos_cursos.cursos_id='.$id);
+        //$datos = DB::select("select count(*) as numAlumnos from alumnos_cursos where cursos_id=$id");
+
+
+        $lista = Cursos::find($id)->alumnos()->get();
         $curso = Cursos::find($id);
+        $datos = AlumnosCursos::CountAlumnos($id);
 
-        $datos = DB::select("select count(*) as numAlumnos from alumnos_cursos where cursos_id=$id");
-
-        return view('alumnoscursos.listado')->with('lista', $lista)
-                                            ->with('curso', $curso)
-                                            ->with('numAlumnos', $datos[0]->numAlumnos);
+        return view('alumnoscursos.listado')->with('lista', $lista)->with('curso', $curso)->with('numAlumnos', $datos);
 
     }
 

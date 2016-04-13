@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Cursos;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+
+use App\User;
+use Yajra\Datatables\Datatables;
 
 class CursosController extends Controller
 {
@@ -22,7 +25,17 @@ class CursosController extends Controller
 
         $cursos = Cursos::all();
 
-        return view('cursos.listado')->with('cursos', $cursos)->with('user');
+        //return view('cursos.listado')->with('cursos', $cursos)->with('user');
+
+        $curso=false;
+
+        return view('cursos.todo')->with('cursos', $cursos)->with('curso', $curso);
+
+    }
+
+    public function convertHtml5dateToUTC($dt) {
+        $matchdate = Carbon::createFromFormat('Y-m-d*H:i', $dt, 'Europe/Amsterdam');
+        return $matchdate->tz('UTC');
     }
 
     /**
@@ -102,10 +115,13 @@ class CursosController extends Controller
     public function edit($id)
     {
 
+        $cursos = Cursos::all();
         $curso = Cursos::find($id);
 
-        return View('cursos.editar')->with('curso', $curso);
+        return view('cursos.todo')->with('cursos', $cursos)->with('curso', $curso);
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -161,4 +177,6 @@ class CursosController extends Controller
 
         return Redirect('/cursos');
     }
+
+
 }

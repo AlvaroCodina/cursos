@@ -15,7 +15,6 @@
     return view('welcome');
 });*/
 
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -33,13 +32,20 @@ Route::group(['middleware' => 'web'], function() {
     Route::resource('alumnos', 'AlumnosController');
     //Route::resource('alumnoscursos', 'AlumnosCursosController');
 
-
-
     //Route::get('/','CursosController@index');
     Route::get('/', function () {
         return view('index');
     });
 
+    Route::get('/prueba', function () {
+        return view('cursos.listado');
+    });
+
+
+    Route::controller('datatables', 'DatatablesController', [
+        'anyData'  => 'datatables.data',
+        'getIndex' => 'datatables',
+    ]);
 
 
     // Authentication routes...

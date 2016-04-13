@@ -9,6 +9,7 @@
             {!! Html::style('bootstrap/css/bootstrap.min.css') !!}
             {!! Html::style('bootstrap/css/bootstrap-theme.min.css') !!}
             {!! Html::style('styles/menus.css') !!}
+            <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 
         @show
     </head>
@@ -26,13 +27,13 @@
                         </div>
                         <ul class="nav navbar-nav">
                             <li id="itemuno"><a href="/">Home</a></li>
-                            <li id="itemdos"><a href="/cursos/create">Cursos</a></li>
-                            <li id="itemtres"><a href="/cursos">Listado</a></li>
+                            <li id="itemdos"><a href="/cursos">Cursos</a></li>
                             <li id="itemcuatro"><a href="/alumnos/create">Alumnos</a></li>
                             <li id="itemcinco"><a href="/alumnos">Listado</a></li>
                             <li id="itemseis"><a href="/alumnoscursos">Listado AC</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
+                            <li><a href="{{ URL::previous() }}"><span class="glyphicon glyphicon-menu-left"></span> Atrás</a></li>
                             @if (Auth::guest())
                                 <li id="signup"><a href="/auth/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                                 <li id="login"><a href="/auth/login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
@@ -59,6 +60,7 @@
     @section('footer')
 
         <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
+        <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
         {!! Html::script('bootstrap/js/bootstrap.min.js') !!}
 
     @show

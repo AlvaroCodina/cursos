@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use DB;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,11 @@ class AlumnosCursos extends Model
     public function cursos()
     {
         return $this->belongsTo('App\Cursos');
+    }
+
+    public static function CountAlumnos($id)
+    {
+        return DB::table('alumnos_cursos')->where('cursos_id', '=', $id)->count();
     }
 
 

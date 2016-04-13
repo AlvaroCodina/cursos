@@ -24,7 +24,8 @@
 
         <div class="form-group">
             {{ Form::label('numMax', 'Número Máximo') }}
-            {{ Form::text('numMax', null, array('class' => 'form-control')) }}
+            <!--{ { Form::text('numMax', null, array('class' => 'form-control')) }}-->
+            {{ Form::text('numMax', \Illuminate\Support\Facades\Input::old('numMax'), array('class' => 'form-control')) }}
             @if ($errors->has('numMax')) <p class="help-block">{{ $errors->first('numMax') }}</p> @endif
         </div>
 

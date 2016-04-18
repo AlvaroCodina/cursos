@@ -53,62 +53,13 @@
         </div>
 
 
+        @include('datatables.listadoCursos')
 
-
-
-
-
-
-
-        <div class="page-header">
-            <h1 id="listado" class="gris"><span class="glyphicon glyphicon-th-list"></span> Listado de Cursos</h1>
-        </div>
-
-        <div id="ver">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Categoria</th>
-                    <th>Número Máximo</th>
-                    <th>Número Mínimo</th>
-                    <th>Fecha Inicio</th>
-                    <th>Ver Alumnos</th>
-                    <th>Editar</th>
-                    <th>Borrar</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                @foreach ($cursos as $curso)
-                    <tr id="fila{{ $curso->id }}" onclick="datos(this);" class="trlistado">
-                        <td>{{ $curso->categoria }}</td>
-                        <td>{{ $curso->numMax }}</td>
-                        <td>{{ $curso->numMin }}</td>
-                        <td>{{ $curso->fechaInicio }}</td>
-                        <td>
-                            {{ Form::open(array('route' => array('alumnoscursos.show', $curso->id), 'method' => 'get')) }}
-                            <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-list"></span> Ver alumnos</button>
-                            {{ Form::close() }}
-                        </td>
-                        <td>
-                            {{ Form::open(array('route' => array('cursos.edit', $curso->id), 'method' => 'get')) }}
-                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Editar</button>
-                            {{ Form::close() }}
-                        </td>
-                        <td>
-                            {{ Form::open(array('route' => array('cursos.destroy', $curso->id), 'method' => 'delete')) }}
-                            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Borrar</button>
-                            {{ Form::close() }}
-                        </td>
-                    </tr>
-                @endforeach
-
-                </tbody>
-            </table>
-        </div>
 
     </div>
 @stop
+
+
 
 @section('footer')
     @parent
@@ -116,9 +67,6 @@
     <script>
         $(document).ready(function(){
             $("#itemdos").addClass("active");
-
-            /*$("#nuevo").hide();
-            $("#ver").hide();*/
 
             $("#nuevocurso").click(function(){
                 if($("#nuevo").css("display")=="none"){
@@ -136,17 +84,40 @@
                 }
             });
 
-            //$("#fechaInicio").value = "2016-04-13T17:45:00Z";
-            //$("#fechaInicio").val(moment().format('YYYY-MM-DD[T]HH:mm'));
-
+            $(function() {
+                $('#cursos-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{!! route('datatables.data') !!}',
+                    columns: [
+                        { data: 'categoria', name: 'categoria' },
+                        { data: 'fechaInicio', name: 'fechaInicio' },
+                        { data: 'numMax', name: 'numMax' },
+                        { data: 'numMin', name: 'numMin' },
+                        {
+                            data: "id",
+                            "render": function (data) {
+                                return "<form action='/alumnoscursos/" + data + "' method='GET'><button type='submit' class='btn btn-info'><span class='glyphicon glyphicon-list'></span> Ver alumnos</button></form>";
+                            } },
+                        {
+                            data: "id",
+                            "render": function (data) {
+                                return "<form action='/cursos/" + data + "/edit' method='PUT'><button type='submit' class='btn btn-warning'><span class='glyphicon glyphicon-edit'></span> Editar</button></form>";
+                            } },
+                        {
+                            data: "id",
+                            "render": function (data) {
+                                return "<form action='/cursos/" + data + "' method='DELETE'><button type='submit' class='btn btn-danger'><span class='glyphicon glyphicon-remove-sign'></span> Borrar</button></form>";
+                            } },
+                    ]
+                });
+            });
 
         });
 
-        function datos(dts){
-            var str = dts.id;
-            var res = str.substring(4);
-            window.location.replace("/cursos/" + res);
-        }
+
     </script>
+
+
 
 @stop

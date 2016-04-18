@@ -20,5 +20,10 @@ class AlumnosCursos extends Model
         return DB::table('alumnos_cursos')->where('cursos_id', '=', $id)->count();
     }
 
+    public static function GetAlumnoEmail($email)
+    {
+        return DB::table('alumnos')->where('email', $email)->get();
+    }
+
 
 }

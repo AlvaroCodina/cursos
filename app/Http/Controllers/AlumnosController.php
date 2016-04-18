@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use Yajra\Datatables\Datatables;
 
 class AlumnosController extends Controller
 {
@@ -21,7 +22,9 @@ class AlumnosController extends Controller
     {
         $alumnos = Alumnos::all();
 
-        return view('alumnos.listado')->with('alumnos', $alumnos);
+        $alumno=false;
+
+        return view('alumnos.todo')->with('alumnos', $alumnos)->with('alumno', $alumno);
     }
 
     /**
@@ -66,8 +69,18 @@ class AlumnosController extends Controller
 
         } else {
 
-            Alumnos::create($request->all());
-            return redirect('/alumnos');
+            //Alumnos::create($request->all());                     //Por que la camara no esta en el modelo...
+
+            $alumno = new Alumnos;
+            $alumno->nombre = $request->nombre;
+            $alumno->apellidos = $request->apellidos;
+            $alumno->email = $request->email;
+            $alumno->telefono = $request->telefono;
+            $alumno->camara = $request->camara;
+
+            $alumno->save();
+
+            return redirect('/');
 
         }
     }
@@ -93,8 +106,9 @@ class AlumnosController extends Controller
      */
     public function edit($id)
     {
+        $alumnos = Alumnos::all();
         $alumno = Alumnos::find($id);
-        return view('alumnos.editar')->with('alumno', $alumno);
+        return view('alumnos.todo')->with('alumnos', $alumnos)->with('alumno', $alumno);
     }
 
     /**
@@ -130,6 +144,7 @@ class AlumnosController extends Controller
             $alumno->apellidos = Input::get('apellidos');
             $alumno->email     = Input::get('email');
             $alumno->telefono  = Input::get('telefono');
+            $alumno->camara  = Input::get('camara');
             $alumno->save();
 
             return Redirect('/alumnos');

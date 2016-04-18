@@ -34,17 +34,16 @@ Route::group(['middleware' => 'web'], function() {
 
     //Route::get('/','CursosController@index');
     Route::get('/', function () {
-        return view('index');
+        return view('home');
     });
 
-    Route::get('/prueba', function () {
-        return view('cursos.listado');
-    });
-
+    Route::any('datatables/dataAl','DatatablesController@dataAl');
 
     Route::controller('datatables', 'DatatablesController', [
-        'anyData'  => 'datatables.data',
+
+        'anyData' => 'datatables.data',     //Este SI va
         'getIndex' => 'datatables',
+        //'dataAl' => 'datatables.dataAl',    //Este NO va
     ]);
 
 

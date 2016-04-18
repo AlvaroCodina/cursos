@@ -45,7 +45,7 @@ class CursosController extends Controller
      */
     public function create()
     {
-        return view('cursos.cursos');
+        return view('cursos.todo');
     }
 
 

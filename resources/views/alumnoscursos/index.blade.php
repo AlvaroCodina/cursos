@@ -1,49 +1,51 @@
-
-@extends('layouts.menu')
+@extends('layouts.pagina')
 
 @section('header')
     @parent
 
-    <title>Listado Alumnos por Cursos</title>
+    <title>Datos usuarios</title>
+    <style>
+        .submenu{
+            position: absolute;
+            top: 0;
+            right: 15px;
+        }
+        a{ color: black; }
+        a:hover{ color: darkslategrey; }
+    </style>
+    @stop
 
-@stop
 
-@section('pagina')
+    @section('pagina')
+    <!-- Aquí podrán ver los usuarios registrados sus datos y cursos -->
 
-    <div class="col-sm-8 col-sm-offset-2">
 
-        <div class="page-header">
-            <h1><span class="glyphicon glyphicon-th-list"></span> Listado de los Alumnos por Cursos </h1>
-        </div>
+    <div class="ancho">
+        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 margentop">
+            <div class="panel-heading"><h2>Datos personales</h2></div>
+            <div class="panel panel-default paddTodo" style="position: relative;">
+                <p class="parrafo"><span class="label label-info">Nombre:</span> {{ $alumno->nombre }}</p>
+                <p class="parrafo"><span class="label label-info">Apellidos:</span> {{ $alumno->apellidos }}</p>
+                <p class="parrafo"><span class="label label-info">Email:</span> {{ $alumno->email }}</p>
+                <p class="parrafo"><span class="label label-info">Camara:</span> {{ $alumno->camara }}</p>
+                <p class="parrafo"><span class="label label-info">Teléfono:</span> {{ $alumno->telefono }}</p>
+                <div class="submenu">
+                    <a href="/alumnos/{{ $alumno->id  }}/edit">editar</a>
+                </div>
+            </div>
 
-        <div>
+            <div class="panel-heading"><h2>Cursos</h2></div>
 
-            @foreach ($cursos as $dts)
-                <ul class="list-group dropdown">
-                    <li class="list-group-item list-group-item-info dropdown-toggle" type="button" data-toggle="dropdown"><b>{{ $dts->categoria }}</b> {{ $dts->fechaInicio }}</li>
-                    <ul class="list-group dropdown-menu droplist">
-                        @foreach ($alumnos as $alumno)
-                            @if($dts->cursos_id == $alumno->cursos_id)
-                                <li class="list-group-item">{{ $alumno->nombre }} {{ $alumno->apellidos }}</li>
-                            @endif
-                        @endforeach
-                    </ul>
-                </ul>
-            @endforeach
-
-            <!-- Faltan las arrobas y quitar la separación entre { { -->
-            <!--foreach ($cursos as $dts)
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-info"><b>{ { $dts->categoria }}</b> { { $dts->fechaInicio }}</li>
-                        <ul class="list-group">
-                            foreach ($alumnos as $alumno)
-                                if($dts->cursos_id == $alumno->cursos_id)
-                                    <li class="list-group-item">{ { $alumno->nombre }} { { $alumno->apellidos }}</li>
-                                endif
-                            endforeach
-                        </ul>
-                    </ul>
-                endforeach-->
+                @foreach($cursos as $curso)
+                <div class="panel panel-default paddTodo" style="position: relative;">
+                    <p class="parrafo"><span class="label label-info">Curso:</span> {{ $curso->categoria }}</p>
+                    <p class="parrafo"><span class="label label-info">fecha:</span> {{ $curso->fechaInicio }}</p>
+                    <div class="submenu">
+                        <a href="">editar</a>
+                        <a href="">quitarse</a>
+                    </div>
+                </div>
+                @endforeach
 
         </div>
 
@@ -54,10 +56,5 @@
 @section('footer')
     @parent
 
-    <script>
-        $(document).ready(function(){
-            $("#itemseis").addClass("active");
-        });
-    </script>
 
 @stop

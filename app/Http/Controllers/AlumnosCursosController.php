@@ -22,14 +22,20 @@ class AlumnosCursosController extends Controller
      */
     public function index()
     {
-        $alumnos = DB::select('select alumnos.nombre, alumnos.apellidos, alumnos_cursos.cursos_id from cursos, alumnos, alumnos_cursos where cursos.id=alumnos_cursos.cursos_id and alumnos.id=alumnos_cursos.alumnos_id');
-        $cursos = DB::select('select cursos.categoria, cursos.fechaInicio, alumnos_cursos.cursos_id from cursos, alumnos, alumnos_cursos where cursos.id=alumnos_cursos.cursos_id and alumnos.id=alumnos_cursos.alumnos_id GROUP BY alumnos_cursos.cursos_id');
 
-        /*$cur = Cursos::find(1);
-        $cur->alumnoscursos();
-        dd($cur);*/
+        //Datos y cursos del usuario registrado que le da al botón de su Nombre en el menú
+        //dd(Carbon::now()->diffInDays(Carbon::now()->subDays(2), false));
 
-        return view('alumnoscursos.index')->with('alumnos', $alumnos)->with('cursos', $cursos);
+
+        $alumno = AlumnosCursos::GetAlumnoEmail(Auth::user()->email);
+        if($alumno==null){
+            return view('alumnos.alumnos')->with('id', 0);
+        }
+
+        $cursos = Alumnos::find($alumno[0]->id)->cursos()->get();
+
+
+        return view('alumnoscursos.index')->with('alumno', $alumno[0])->with('cursos', $cursos);
     }
 
     /**
@@ -60,6 +66,10 @@ class AlumnosCursosController extends Controller
          */
 
         $alumno = DB::select("select * from alumnos where email='".Auth::user()->email."'");
+
+        if($alumno == null){
+            return view('alumnos.alumnos')->with('id', $id);
+        }
 
         if($id==1){
             //FOTOGRAFÍA
@@ -123,6 +133,9 @@ class AlumnosCursosController extends Controller
 
             for($i = 0; $i < count($fechas); $i++){
                 $cDate = Carbon::parse($fechas[$i]->fechaInicio);
+                //comparar las fechas por si ya pasó
+                //Carbon::now()->diffInDays(Carbon::now()->subDays(2), false)
+                //if(){}
                 $dif = $cDate->diffInDays($date);
 
 

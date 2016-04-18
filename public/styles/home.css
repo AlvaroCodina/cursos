@@ -1,124 +1,197 @@
 
-
-body{
-    background-color: white;
-
-    font-size: 2em;
+@font-face {
+    font-family: Titulo;
+    src: url(basictitlefont.ttf);
 }
 
-#fotohome{
-
-    width: 100%;
-    background: url("../images/fondo.jpg") no-repeat 0 -300px;
-    height: 500px;
-
+@font-face {
+    font-family: myFont;
+    src: url(Roboto-Thin.ttf);
 }
+
+body{ font-family: myFont; }
 
 .titulo{
-
-    color: white;
-    font-size: 6em;
-    margin-top: 150px;
-
+    font-family: Titulo;
 }
 
-.subtitulo{
-
-    color: lightblue;
-    font-size: 3em;
-    margin-top: 50px;
-
+a:hover{
+    text-decoration: none;
+    color: #fff;
 }
 
-#cursos{
+a{color: #fff}
 
+
+
+@media (min-width: 1024px){
+    .ancho{  min-height: 550px; width: 100%; }
+    #contenido{
+        background: url("../images/montanas.jpeg") no-repeat -900px -350px;
+        background-attachment: fixed;
+    }
+    .titulo{ padding-top: 200px; }
+    .tith1{ font-size: 5em; }
+    .desc{ padding-top: 230px; }
+    .parDec{ font-size: 3em; }
+    #cursos{ padding-top: 180px; }
+    .footer{ height: 200px; margin-top: 50px; }
+    .parFoo{ font-size: 1em; padding-top: 85px; }
+    .separacion{ padding-top: 50px; padding-bottom: 100px;}
+    .paddTodo{ padding: 50px; }
+    .parrafo{ font-size: 2em; }
+}
+
+@media (max-width: 1024px){
+    .ancho{  min-height: 550px; width: 100%; }
+    #contenido{
+        background: url("../images/montanas.jpeg") no-repeat -1500px -400px;
+        background-attachment: fixed;
+    }
+    .titulo{ padding-top: 200px; }
+    .tith1{ font-size: 5em; }
+    .desc{ padding-top: 250px; }
+    .parDec{ font-size: 3em; }
+    #cursos{ padding-top: 180px; }
+    .footer{ height: 200px;margin-top: 50px; }
+    .parFoo{ font-size: 1em; padding-top: 85px; }
+    .separacion{ padding-top: 30px; padding-bottom: 50px;}
+    .paddTodo{ padding: 50px; }
+    .parrafo{ font-size: 2em; }
+}
+
+@media (max-width: 768px){
+    .ancho{  min-height: 400px; width: 100%; }
+    #contenido{
+        background: url("../images/montanas.jpeg") no-repeat -1500px -350px;
+        background-attachment: fixed;
+    }
+    .titulo{ padding-top: 150px; }
+    .tith1{ font-size: 4em; }
+    .desc{ padding-top: 180px; }
+    .parDec{ font-size: 2.5em; }
+    #cursos{ padding-top: 50px; }
+    .footer{ height: 150px; margin-top: 50px;}
+    .parFoo{ font-size: 1em; padding-top: 60px; }
+    .separacion{ padding-top: 30px; padding-bottom: 50px;}
+    .paddTodo{ padding: 30px; }
+    .parrafo{ font-size: 1.5em; }
+}
+
+@media (max-width: 570px){
+    .ancho{  min-height: 300px; width: 100%; }
+    #contenido{
+        background: url("../images/montanas.jpeg") no-repeat -1500px -600px;
+        background-attachment: fixed;
+    }
+    .titulo{ padding-top: 100px; }
+    .tith1{ font-size: 3em; }
+    .desc{ padding-top: 130px; }
+    .parDec{ font-size: 2em; }
+    #cursos{ padding-top: 30px; }
+    .footer{ height: 100px; margin-top: 30px;}
+    .parFoo{ font-size: 1em; padding-top: 30px; }
+    .separacion{ padding-top: 30px; padding-bottom: 50px;}
+    .paddTodo{ padding: 10px; }
+    .parrafo{ font-size: 1.3em; }
+}
+
+.footer{
+    background-color: #3D3D3D;
     width: 100%;
-    height: auto;
-    margin-top: 100px;
-    padding-bottom: 100px;
-
+}
+.parFoo{
+    color: #fff;
 }
 
-.row{
-    margin-left: 0;
-    margin-right: 0;
-}
 
-.titulocursos{
-    font-size: 2em;
-    color: black;
-    padding: 20px;
-}
+.margentop{ padding-top: 100px; float: none;}
 
-.fotoscursos{
-    height: 230px;
+
+
+
+
+
+
+
+
+
+
+
+
+.boton {
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #e74c3c;
+    border-radius: 0.6em;
+    color: #e74c3c;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0 auto;
     margin-bottom: 20px;
+    padding: 1.2em 2.8em;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+.boton:hover, .boton:focus {
+    color: #fff;
+    outline: 0;
 }
 
-.inscribirse{
-    font-size: 1.5em;
+.fourth {
+    /* #f1c40f */
+    border-color: #3D3D3D;
+    color: #3D3D3D;
+    background-image: -webkit-linear-gradient(45deg, #3D3D3D 50%, transparent 50%);
+    background-image: linear-gradient(45deg, #3D3D3D 50%, transparent 50%);
+    background-position: 100%;
+    background-size: 400%;
+    -webkit-transition: background 300ms ease-in-out;
+    transition: background 300ms ease-in-out;
 }
-
-#footer{
-
-    width: 100%;
-    background: url("../images/fondo.jpg") no-repeat 0 -600px;
-    height: 200px;
-
-}
-
-.descripcionfooter {
-    color: white;
-    font-size: 1.5em;
-    margin-top: 90px;
-    vertical-align: middle;
+.fourth:hover {
+    background-position: 0;
 }
 
 
-/* login */
-
-.login{
-
-    padding-left: 0;
-    padding-right: 0;
-    margin-top: 50px;
-
+.logo{
+    background: url("../images/ril-logo-blanco-big.png") no-repeat;
+    background-size: cover;
+    min-height: 100px;
 }
 
-table {
-    border-collapse: separate;
-    border-spacing:  10px;
-}
 
-@media (max-width: 544px) {
-    .texto{ width: 100%; margin-bottom: 10px; }
-    .login{ font-size: 1em; }
-    .fila{ min-height: 30px; }
-    #formulario{ padding-top: 10px; }
-}
-@media (min-width: 544px) and (max-width: 768px){
-    .texto{ width: 100%; margin-bottom: 20px; }
-    .login{ font-size: 1.5em; }
-    .fila{ min-height: 50px; }
-    #formulario{ padding-top: 15px; }
-}
-@media (min-width: 768px) and (max-width: 990px){
-    .texto{ width: 100%; margin-bottom: 30px; }
-    .login{ font-size: 2em; }
-    .fila{ min-height: 100px; }
-    #formulario{ padding-top: 20px; }
-}
-@media (min-width: 990px){ /* and (max-width: 1200px) */
-    .texto{ width: 100%; margin-bottom: 30px; }
-    .login{ font-size: 2em; }
-    .fila{ min-height: 100px; }
-    #formulario{ padding-top: 20px; }
-}
-/*@media (min-width: 1200px){
-    .texto{ width: 100%; margin-bottom: 30px; }
-    .login{ font-size: 2em; }
-    .fila{ min-height: 100px; }
-}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .error{
@@ -129,6 +202,111 @@ table {
     cursor: pointer;
 }
 
+
+
+
+
+.navigation {
+    /* critical sizing and position styles */
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+
+    /* non-critical appearance styles */
+    list-style: none;
+    background: #111;
+}
+
+/* Navigation Menu - List items */
+.nav-item {
+    /* non-critical appearance styles */
+    width: 200px;
+    border-top: 1px solid #111;
+    border-bottom: 1px solid #000;
+}
+
+.nav-item a {
+    /* non-critical appearance styles */
+    display: block;
+    padding: 1em;
+    background: linear-gradient(135deg, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
+    color: white;
+    font-size: 1.2em;
+    text-decoration: none;
+    transition: color 0.2s, background 0.5s;
+}
+
+.nav-item a:hover {
+    color: #c74438;
+    background: linear-gradient(135deg, rgba(0,0,0,0) 0%,rgba(75,20,20,0.65) 100%);
+}
+
+/* Site Wrapper - Everything that isn't navigation */
+.site-wrap {
+    /* Critical position and size styles */
+    min-height: 100%;
+    min-width: 100%;
+    background-color: white; /* Needs a background or else the nav will show through */
+    position: relative;
+    top: 0;
+    bottom: 100%;
+    left: 0;
+    z-index: 1;
+
+    /* non-critical apperance styles */
+    //padding: 4em;
+    background-image: linear-gradient(135deg, rgb(254,255,255) 0%,rgb(221,241,249) 35%,rgb(160,216,239) 100%);
+    background-size: 200%;
+}
+
+/* Nav Trigger */
+.nav-trigger {
+    /* critical styles - hide the checkbox input */
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+
+label[for="nav-trigger"] {
+    /* critical positioning styles */
+    position: fixed;
+    left: 15px; top: 15px;
+    z-index: 2;
+
+    /* non-critical apperance styles */
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+    background-size: contain;
+}
+
+/* Make the Magic Happen */
+.nav-trigger + label, .site-wrap {
+    transition: left 0.2s;
+}
+
+.nav-trigger:checked + label {
+    left: 215px;
+}
+
+.nav-trigger:checked ~ .site-wrap {
+    left: 200px;
+    box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
+}
+
+body {
+    /* Without this, the body has excess horizontal scroll when the menu is open */
+    overflow-x: hidden;
+}
+
+/* Micro reset */
+*,*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;margin:0;padding:0;}
+html, body { height: 100%; width: 100%; font-family: Helvetica, Arial, sans-serif; }
 
 
 

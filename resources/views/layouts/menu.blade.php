@@ -9,27 +9,34 @@
             {!! Html::style('bootstrap/css/bootstrap.min.css') !!}
             {!! Html::style('bootstrap/css/bootstrap-theme.min.css') !!}
             {!! Html::style('styles/menus.css') !!}
-            <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+            <!--<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">-->
+            <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+            <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.0.2/css/responsive.bootstrap.min.css">
 
         @show
     </head>
     <body>
 
 
-    <div class="row">
-
         <div class="col-lg-12 col-md-12 col-xs-12 paddmenu">
 
-                <nav class="navbar navbar-inverse">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="#">rIL</a>
-                        </div>
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li id="itemuno"><a href="/">Home</a></li>
                             <li id="itemdos"><a href="/cursos">Cursos</a></li>
-                            <li id="itemcuatro"><a href="/alumnos/create">Alumnos</a></li>
-                            <li id="itemcinco"><a href="/alumnos">Listado</a></li>
+                            <li id="itemtres"><a href="/alumnos">Alumnos</a></li>
                             <li id="itemseis"><a href="/alumnoscursos">Listado AC</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -50,18 +57,28 @@
                             @endif
                         </ul>
                     </div>
-                </nav>
+                </div>
+            </nav>
+
         </div>
 
         @yield('pagina')
 
-    </div>
 
     @section('footer')
 
+        <div class="col-xs-12 margenfooter">
+
+        </div>
+
+
         <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
-        <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+        <script src="//cdn.datatables.net/responsive/2.0.2/js/dataTables.responsive.min.js"></script>
+        <script src="//cdn.datatables.net/responsive/2.0.2/js/responsive.bootstrap.min.js"></script>
         {!! Html::script('bootstrap/js/bootstrap.min.js') !!}
+
 
     @show
 

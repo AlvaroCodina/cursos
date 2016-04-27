@@ -11,6 +11,8 @@
 </head>
 <body>
 
+<!--<span class="ir-arriba">Arriba</span>-->
+<a href="#" class="ir-arriba glyphicon glyphicon-chevron-up"></a>
 
 <ul class="navigation">
     <li class="nav-item"><a href="/"><div class="logo"></div></a></li>
@@ -27,6 +29,7 @@
 <input type="checkbox" id="nav-trigger" class="nav-trigger" />
 <label for="nav-trigger"></label>
 
+<a href="{{ URL::previous() }}"><span class="atras glyphicon glyphicon-arrow-left"></span></a>
 
 <div class="site-wrap">
 
@@ -42,8 +45,29 @@
 
 @section('footer')
 
+
+
     <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
     {!! Html::script('bootstrap/js/bootstrap.min.js') !!}
+    <script>
+        $(document).ready(function(){
+
+            $(window).scroll(function(){
+                if ($(this).scrollTop() > 100) {
+                    $('.ir-arriba').fadeIn();
+                } else {
+                    $('.ir-arriba').fadeOut();
+                }
+            });
+
+            $('.ir-arriba').click(function(){
+                $("html, body").animate({ scrollTop: 0 }, 600);
+                return false;
+            });
+
+        });
+
+    </script>
 
 @show
 

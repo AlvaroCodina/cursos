@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Alumnos;
+use App\AlumnosCursos;
 use App\Cursos;
+use App\ListaEspera;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests;
@@ -14,6 +17,19 @@ use Yajra\Datatables\Datatables;
 
 class CursosController extends Controller
 {
+
+
+    public function reiniciarDatos()
+    {
+        AlumnosCursos::truncate();
+        ListaEspera::truncate();
+        //Cursos::truncate();
+        //Alumnos::truncate();
+    }
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -21,21 +37,24 @@ class CursosController extends Controller
      */
     public function index()
     {
-        //$user = \Auth::user();         //devuelve el objeto user con los datos del usuario loggeado
 
-        $cursos = Cursos::all();
+        //$this->reiniciarDatos();
 
-        //return view('cursos.listado')->with('cursos', $cursos)->with('user');
+        $user = \Auth::user();         //devuelve el objeto user con los datos del usuario loggeado
 
-        $curso=false;
+        if($user == null){ return view('auth.login'); }
 
-        return view('cursos.todo')->with('cursos', $cursos)->with('curso', $curso);
+        if ($user->is('admin')) {
+            $cursos = Cursos::all();
 
-    }
+            $curso=false;
 
-    public function convertHtml5dateToUTC($dt) {
-        $matchdate = Carbon::createFromFormat('Y-m-d*H:i', $dt, 'Europe/Amsterdam');
-        return $matchdate->tz('UTC');
+            return view('cursos.todo')->with('cursos', $cursos)->with('curso', $curso);
+        }
+        else{
+            return view('unauthorized');
+        }
+
     }
 
     /**

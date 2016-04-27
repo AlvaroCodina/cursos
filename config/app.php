@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'UTC+2',
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -160,6 +160,11 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
 
+        Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
+        Illuminate\Auth\AuthServiceProvider::class,
+        Bican\Roles\RolesServiceProvider::class,
+        'Jenssegers\Date\DateServiceProvider',
+
     ],
 
     /*
@@ -208,6 +213,7 @@ return [
         'Html' => 'Collective\Html\HtmlFacade',
         'Form' => 'Collective\Html\FormFacade',
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Date' => Jenssegers\Date\Date::class,
 
     ],
 

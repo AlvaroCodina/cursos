@@ -175,9 +175,36 @@ a{color: #fff}
     min-height: 100px;
 }
 
+.atras{
+    font-size: 2em;
+    z-index: 2;
+    color: black;
+    cursor:pointer;
+    position: fixed;
+    top:15px;
+    right:15px;
+}
 
+.ir-arriba {
+    display:none;
+    padding:10px;
+    background:black;
+    font-size:20px;
+    color:#fff;
+    cursor:pointer;
+    position: fixed;
+    bottom:20px;
+    right:20px;
+    top: inherit;
+    z-index: 2;
+    border-radius: 1em;
+}
 
+a.ir-arriba{ text-decoration: none; color: white; }
 
+.ir-arriba:hover{
+    background: darkslategrey;
+}
 
 
 
@@ -307,6 +334,7 @@ body {
 /* Micro reset */
 *,*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;margin:0;padding:0;}
 html, body { height: 100%; width: 100%; font-family: Helvetica, Arial, sans-serif; }
+
 
 
 

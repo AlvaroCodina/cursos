@@ -1,36 +1,13 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cursos rIL</title>
-    {!! Html::style('bootstrap/css/bootstrap.min.css') !!}
-    {!! Html::style('bootstrap/css/bootstrap-theme.min.css') !!}
-    {!! Html::style('styles/home.css') !!}
-</head>
-<body>
+@extends('layouts.pagina')
 
+@section('header')
+    @parent
 
-<ul class="navigation">
-    <li class="nav-item"><a href="/"><div class="logo"></div></a></li>
-    <!--<li class="nav-item"><a href="/">Inicio</a></li>-->
-    @if (Auth::guest())
-        <li class="nav-item"><a href="/auth/login">Log In</a></li>
-        <li class="nav-item"><a href="/auth/register">Sign Up</a></li>
-    @else
-        <li class="nav-item"><a href="/alumnoscursos/">{{ Auth::user()->name }}</a></li>
-        <li class="nav-item"><a href="/auth/logout">Log Out</a></li>
-    @endif
-</ul>
+    <title>Sign Up</title>
 
-<input type="checkbox" id="nav-trigger" class="nav-trigger" />
-<label for="nav-trigger"></label>
+@stop
 
-
-
-
-
-<div class="site-wrap">
+@section('pagina')
 
     <div class="ancho">
 
@@ -46,9 +23,6 @@
 
         <div class=" text-center" style="padding-top: 50px;">
             <p class="parDec">Registrate para aprender</p>
-
-
-
             <div class="container separacion">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
@@ -127,25 +101,12 @@
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
-
     </div>
 
+@stop
 
+@section('footer')
+    @parent
 
-    <div class="footer" style="margin-top: 0px;">
-        <p class="parFoo text-center">cddhvbhs vsdsvbsv sdvdbdj</p>
-        <p class="text-center"><a class="parFoo" href="http://www.ril.es">www.ril.es</a></p>
-    </div>
-
-</div>
-
-<script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
-{!! Html::script('bootstrap/js/bootstrap.min.js') !!}
-
-</body>
-</html>
+@stop

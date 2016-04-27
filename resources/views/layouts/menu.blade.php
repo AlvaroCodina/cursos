@@ -37,7 +37,6 @@
                             <li id="itemuno"><a href="/">Home</a></li>
                             <li id="itemdos"><a href="/cursos">Cursos</a></li>
                             <li id="itemtres"><a href="/alumnos">Alumnos</a></li>
-                            <li id="itemseis"><a href="/alumnoscursos">Listado AC</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="{{ URL::previous() }}"><span class="glyphicon glyphicon-menu-left"></span> Atrás</a></li>

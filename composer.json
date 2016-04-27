@@ -7,9 +7,11 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
+	"bican/roles": "2.1.*",
 	"laravelcollective/html": "~5.0",
         "nesbot/carbon": "^1.21",
-        "yajra/laravel-datatables-oracle": "^6.10"
+        "yajra/laravel-datatables-oracle": "^6.10",
+        "jenssegers/date": "^3.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

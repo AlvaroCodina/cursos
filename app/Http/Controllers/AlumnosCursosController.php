@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Alumnos;
 use App\Cursos;
+use App\ListaEspera;
 use DB;
 use App\AlumnosCursos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 use Carbon\Carbon;
 
@@ -32,10 +34,13 @@ class AlumnosCursosController extends Controller
             return view('alumnos.alumnos')->with('id', 0);
         }
 
-        $cursos = Alumnos::find($alumno[0]->id)->cursos()->get();
+        $cursos = Alumnos::find($alumno[0]->id)->cursos()->orderBy('fechaInicio', 'desc')->get();
 
+        $listaEspera = Alumnos::ListaEspera($alumno[0]);
 
-        return view('alumnoscursos.index')->with('alumno', $alumno[0])->with('cursos', $cursos);
+        //dd(DB::table('lista_espera')->where('cursos_id', 24)->first());
+
+        return view('alumnoscursos.index')->with('alumno', $alumno[0])->with('cursos', $cursos)->with('espera', $listaEspera[0]);
     }
 
     /**
@@ -45,8 +50,7 @@ class AlumnosCursosController extends Controller
      */
     public function create()
     {
-        return view('alumnoscursos.alumnoscursos');
-
+        //return view('alumnoscursos.alumnoscursos');
     }
 
     /**
@@ -55,7 +59,7 @@ class AlumnosCursosController extends Controller
      * @param int $id
      * @return una vista u otra
      */
-    public function checkDatos($id)
+    public function checkDatos($id, $fechaInicio)
     {
         /**
          * Comprobar segun el ID que curso es y que campos son necesarios para poder inscribirse en el curso
@@ -75,29 +79,29 @@ class AlumnosCursosController extends Controller
             //FOTOGRAFÍA
             //Necesario el campo camara
             if($alumno[0]->camara != ""){
-                return $this->mirarCurso($alumno[0], $id);
+                return $this->mirarCurso($alumno[0], $id, $fechaInicio);
             }
             else{
                 return view('alumnoscursos.rellenar')->with('alumno', $alumno)->with('id', $id);
             }
         }
         else{
-            return $this->mirarCurso($alumno[0], $id);
+            return $this->mirarCurso($alumno[0], $id, $fechaInicio);
         }
-
-
 
     }
 
-
-    public function mirarCurso($Alumno, $id)
+    /**
+     * Mira si hay cursos, si estas ya en ese curso o si no estas te inscribe
+     *
+     * @param $Alumno Objeto del alumno actualmente logeado
+     * @param $id id del tipo de curso
+     * @param $fechaInicio fecha de inicio del curso
+     * @return mixed
+     */
+    public function mirarCurso($Alumno, $id, $fechaInicio)
     {
-        /*
-         * Mirar que el curso este lleno o no(mirar fecha actual y comparar con la fecha mas proxima de los cursos que están)
-         * Si esta lleno: crear un registro nuevo de ese tipo de curso en la tabla alumnos_cursos y añadir al alumno
-         * Si no esta lleno: añadir al alumno en ese curso de la tabla alumnos cursos
-         * */
-
+        $msg="Inscrito con éxito";
         $categoria="";
         switch ($id) {
             case 1:
@@ -111,83 +115,45 @@ class AlumnosCursosController extends Controller
                 break;
         }
 
-        $msg="Inscrito con éxito";
-        $min=1000000;
-        $id_curso=0;
-        $num_max=0;
-        $date = Carbon::now();
-        $cursosLlenos = array();
-        $fechaLlena=Carbon::now();
-        $salir=false;
-        $algo=false;
+        $condiciones = ['categoria' => $categoria, 'fechaInicio' => $fechaInicio];
+        $curso = Cursos::where($condiciones)->get();
 
-        do {
+        $numeroAlumnos = DB::table('alumnos_cursos')->where('cursos_id', $curso[0]->id)->count();
 
-            $salir=true;
-            $fechas = DB::select("select * from cursos where categoria='$categoria'");
+        $esta = false;
+        $estaAlumno = Cursos::find($curso[0]->id)->alumnos()->get();
 
-            if(count($fechas)==0){
-                $msg = "No hay cursos.";
-                goto end;
-            }
-
-            for($i = 0; $i < count($fechas); $i++){
-                $cDate = Carbon::parse($fechas[$i]->fechaInicio);
-                //comparar las fechas por si ya pasó
-                //Carbon::now()->diffInDays(Carbon::now()->subDays(2), false)
-                //if(){}
-                $dif = $cDate->diffInDays($date);
-
-
-                $estaAlumno = DB::select("select * from alumnos_cursos where cursos_id=".$fechas[$i]->id);
-                for($j=0; $j < count($estaAlumno); $j++){
-                    if($estaAlumno[$j]->alumnos_id==$Alumno->id){
-                        $msg="Yá estás inscrito en este curso";
-                        goto end;
-                    }
-                }
-
-
-                if(array_search($cDate, $cursosLlenos)==false){
-                    if($dif<$min){
-                        $min=$dif;
-                        $id_curso = $fechas[$i]->id;
-                        $num_max = $fechas[$i]->numMax;
-                        $fechaLlena = $cDate;
-                    }
-                }
-            }
-
-            $numeroAlumnos = DB::table('alumnos_cursos')->where('cursos_id', $id_curso)->count();
-
-            if($numeroAlumnos < $num_max){
-                DB::table('alumnos_cursos')->insert([
-                    ['cursos_id' => $id_curso, 'alumnos_id' => $Alumno->id]
-                ]);
-                goto end;
-            }
-            else{
-                $cursosLlenos[] = $fechaLlena;
-            }
-
-            if($numeroAlumnos==$num_max){
-                $salir=false;
-                //goto end;
-            }
-
-
-        } while ($algo==true);
-
-        end:
-
-        if($salir==false){
-            $msg="Ya no hay más plazas!! y no hay más cursos programados aún";
+        foreach ($estaAlumno as $alumnos) {
+            if ($alumnos->id == $Alumno->id) { $esta = true; }
         }
 
-        //devolver el mensaje
-        return view('alumnoscursos.pagar')->with('id', $id)->with('mensaje', $msg);
+        if ($esta == true) {
+            $msg = "Yá estás inscrito en este curso";
+        }
+        else {
+            if($numeroAlumnos < $curso[0]->numMax) {
+                DB::table('alumnos_cursos')->insert([
+                    ['cursos_id' => $curso[0]->id, 'alumnos_id' => $Alumno->id]
+                ]);
+            }
+            else{
+                $listaEspera = DB::table('lista_espera')->where('cursos_id', $curso[0]->id)->get();
+                $espera = false;
+                foreach ($listaEspera as $dts) {
+                    if ($dts->alumnos_id == $Alumno->id) { $espera = true; }
+                }
+                if ($espera == false) {
+                    DB::table('lista_espera')->insert([
+                        ['cursos_id' => $curso[0]->id, 'alumnos_id' => $Alumno->id]
+                    ]);
+                    $msg = "Estás inscrito en la lista de espera de este curso";
+                }else{ $msg = "Yá estás inscrito en este curso"; }
+            }
+        }
 
+        return view('alumnoscursos.pagar')->with('id', $id)->with('mensaje', $msg);
     }
+
 
     /**
      *
@@ -203,8 +169,7 @@ class AlumnosCursosController extends Controller
             ->update(['camara' => Input::get('camara')]);
 
 
-        $alumno = DB::select("select * from alumnos where email='".Auth::user()->email."'");
-        return $this->mirarCurso($alumno[0], $id);
+        return Redirect('/alumnoscursos/'.$id."/curso");
     }
 
 
@@ -241,8 +206,13 @@ class AlumnosCursosController extends Controller
         $lista = Cursos::find($id)->alumnos()->get();
         $curso = Cursos::find($id);
         $datos = AlumnosCursos::CountAlumnos($id);
+        $listaEspera = Cursos::find($id)->listaesperacursos()->get();
+        $espera = array();
+        foreach($listaEspera as $dts){
+            $espera[] = Alumnos::find($dts->alumnos_id);
+        }
 
-        return view('alumnoscursos.listado')->with('lista', $lista)->with('curso', $curso)->with('numAlumnos', $datos);
+        return view('alumnoscursos.listado')->with('lista', $lista)->with('curso', $curso)->with('numAlumnos', $datos)->with('espera', $espera);
 
     }
 
@@ -254,7 +224,8 @@ class AlumnosCursosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $alumno = Alumnos::find($id);
+        return view('alumnoscursos.editar')->with('alumno', $alumno);
     }
 
     /**
@@ -266,7 +237,40 @@ class AlumnosCursosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = array(
+            'nombre'      => 'required',
+            'apellidos'   => 'required',
+            'telefono'    => 'required|integer'
+        );
+
+        $messages = [
+            'required' => 'El campo :attribute es requerido.',
+            'integer' => 'El campo :attribute tiene que ser numero entero.',
+        ];
+
+        $validator = Validator::make(Input::all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            $user = \Auth::user();
+
+            if ($user->is('admin')) {
+                return Redirect('alumnos/' . $id . '/edit')
+                    ->withErrors($validator);
+            }else{
+                return Redirect('alumnoscursos/' . $id . '/edit')
+                    ->withErrors($validator);
+            }
+
+        } else {
+            $alumno = Alumnos::find($id);
+            $alumno->nombre    = Input::get('nombre');
+            $alumno->apellidos = Input::get('apellidos');
+            $alumno->telefono  = Input::get('telefono');
+            $alumno->camara    = Input::get('camara');
+            $alumno->save();
+
+            return Redirect('/alumnoscursos/');
+        }
     }
 
     /**
@@ -280,10 +284,21 @@ class AlumnosCursosController extends Controller
         $dts = explode("|", $ids);
         $idCurso=$dts[0];
         $idAlumno=$dts[1];
-        $idAlumnosCursos = DB::select("select id from alumnos_cursos where cursos_id=$idCurso and alumnos_id=$idAlumno");
-        $alumnoscursos = AlumnosCursos::find($idAlumnosCursos[0]->id);
-        $alumnoscursos->delete();
+        if($dts[2]==0){
+            $idAlumnosCursos = DB::select("select id from alumnos_cursos where cursos_id=$idCurso and alumnos_id=$idAlumno");
+            $alumnoscursos = AlumnosCursos::find($idAlumnosCursos[0]->id);
+            $alumnoscursos->delete();
+            AlumnosCursos::CheckListaEspera($idCurso);
+        }else{
+            $idAlumnosEspera = DB::table("lista_espera")->where("cursos_id", $idCurso)->where("alumnos_id", $idAlumno)->pluck("id");
+            $alumnosespera = ListaEspera::find($idAlumnosEspera[0]);
+            $alumnosespera->delete();
+        }
+
+
 
         return Redirect('/alumnoscursos/'.$idCurso);
     }
+
+
 }

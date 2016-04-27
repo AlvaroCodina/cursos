@@ -37,7 +37,6 @@
                         @if($id==1)
                             <p>Curso de fotografía avanzada... es necesario tener camara propia que sea decente...</p>
                             <p>Todos los jueves a las 5:00</p>
-                            <a href="/alumnoscursos/1/checkDatos"><button class="boton fourth">Inscribirse</button></a>
                         @elseif($id==2)
                             <p>Curso de Photoshop básico, y alguna cosa mas de descripción que queda mucho espacio libre</p>
                             <p>Son los viernes de cada semana a las 6:30</p>
@@ -48,12 +47,24 @@
                                 <li>Filtros</li>
                                 <li>Controles básicos</li>
                             </ul>
-                            <a href="/alumnoscursos/2/checkDatos"><button class="boton fourth">Inscribirse</button></a>
                         @elseif($id==3)
                             <p>Curso para niños de algo que no se que es pero seguro que esta muy bien</p>
                             <p>Ni idea maño</p>
-                            <a href="/alumnoscursos/3/checkDatos"><button class="boton fourth">Inscribirse</button></a>
                         @endif
+
+
+                        <h2>Listado de Cursos disponibles</h2>
+
+
+                        @foreach(\App\AlumnosCursos::CursosId($id) as $cursos)
+
+                            <div>
+
+                            </div>
+
+
+                            <p>{{ $cursos->categoria }} - {{ $cursos->fechaInicio }}</p><a href="/alumnoscursos/{{ $id }}/{{ $cursos->fechaInicio }}/checkDatos"><button class="boton fourth">Inscribirse</button></a>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -5,10 +5,6 @@
     @parent
 
     <title>Listado Alumnos del Curso</title>
-    <style>
-        .trlistado{ cursor: pointer; }
-    </style>
-
 @stop
 
 @section('pagina')
@@ -34,18 +30,40 @@
                 <tbody>
 
                 @foreach ($lista as $alumno)
-                    <tr class="trlistado">
+                    <tr>
                         <td>{{ $alumno->nombre }}</td>
                         <td>{{ $alumno->apellidos }}</td>
                         <td>{{ $alumno->email }}</td>
                         <td>{{ $alumno->telefono }}</td>
                         <td>
-                            {{ Form::open(array('route' => array('alumnoscursos.destroy', $curso->id."|".$alumno->id), 'method' => 'delete')) }}
+                            {{ Form::open(array('route' => array('alumnoscursos.destroy', $curso->id."|".$alumno->id."|0"), 'method' => 'delete')) }}
                             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Quitar</button>
                             {{ Form::close() }}
                         </td>
                     </tr>
                 @endforeach
+
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>Lista de Espera</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+
+                @for($i=0;$i< count($espera); $i++)
+                    <tr>
+                        <td>{{ $espera[$i]->nombre }}</td>
+                        <td>{{ $espera[$i]->apellidos }}</td>
+                        <td>{{ $espera[$i]->email }}</td>
+                        <td>{{ $espera[$i]->telefono }}</td>
+                        <td>
+                            {{ Form::open(array('route' => array('alumnoscursos.destroy', $curso->id."|".$espera[$i]->id."|1"), 'method' => 'delete')) }}
+                            <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Quitar</button>
+                            {{ Form::close() }}
+                        </td>
+                    </tr>
+                @endfor
 
                 </tbody>
             </table>

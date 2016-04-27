@@ -92,8 +92,8 @@
                 $('#alumnos-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    //ajax: '{ !!route('datatables.dataAl') !!}',
-                    ajax: 'datatables/dataAl',
+                    ajax: '{!!route('datatablesAlumnos.data') !!}',
+                    //ajax: 'datatables/dataAl',
                     columns: [
                         { data: 'nombre', name: 'nombre' },
                         { data: 'apellidos', name: 'apellidos' },

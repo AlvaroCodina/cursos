@@ -16,6 +16,11 @@ class Cursos extends Model
         return $this->hasMany('App\AlumnosCursos');
     }
 
+    public function listaesperacursos()
+    {
+        return $this->hasMany('App\ListaEspera');
+    }
+
     public function alumnos()
     {
         return $this->belongsToMany('App\Alumnos');

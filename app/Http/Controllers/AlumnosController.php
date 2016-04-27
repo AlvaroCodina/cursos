@@ -10,6 +10,8 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Yajra\Datatables\Datatables;
+use Bican\Roles\Models\Role;
+use App\User;
 
 class AlumnosController extends Controller
 {
@@ -20,11 +22,20 @@ class AlumnosController extends Controller
      */
     public function index()
     {
-        $alumnos = Alumnos::all();
+        $user = \Auth::user();
 
-        $alumno=false;
+        if($user == null){ return view('auth.login'); }
 
-        return view('alumnos.todo')->with('alumnos', $alumnos)->with('alumno', $alumno);
+        if ($user->is('admin')) {
+            $alumnos = Alumnos::all();
+
+            $alumno = false;
+
+            return view('alumnos.todo')->with('alumnos', $alumnos)->with('alumno', $alumno);
+        }
+        else{
+            return view('unauthorized');
+        }
     }
 
     /**
@@ -69,16 +80,7 @@ class AlumnosController extends Controller
 
         } else {
 
-            //Alumnos::create($request->all());                     //Por que la camara no esta en el modelo...
-
-            $alumno = new Alumnos;
-            $alumno->nombre = $request->nombre;
-            $alumno->apellidos = $request->apellidos;
-            $alumno->email = $request->email;
-            $alumno->telefono = $request->telefono;
-            $alumno->camara = $request->camara;
-
-            $alumno->save();
+            Alumnos::create($request->all());
 
             return redirect('/');
 
